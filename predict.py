@@ -120,6 +120,3 @@ def predict(imageFile):
             print ("Verify this a model exported from an Object Detection project.")
             exit(-1)
 
-
-if __name__ == "__main__":
-    predict("two.jpg")
