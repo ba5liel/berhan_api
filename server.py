@@ -4,7 +4,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/path/to/the/uploads'
+UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
@@ -43,9 +43,13 @@ def api_predict():
         filename = secure_filename(file.filename)
         savedfile = os.path.join(app.config['UPLOAD_FOLDER'], filename);
         file.save(savedfile)
-        return jsonify({"error": False, "data": predict(savedfile)})
+        predict("example_1.JPG")
+
+        return jsonify({"error": False, "data": 1})
 
     return jsonify({"error": True, "msg": "Unknow error"})
 
-
-app.run()
+if __name__ == '__main__':
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.run(debug=True)

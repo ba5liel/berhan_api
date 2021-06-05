@@ -62,7 +62,8 @@ with open(labels_filename, 'rt') as lf:
     for l in lf:
         labels.append(l.strip())
 
-def predict(imageFile):        
+def predict(imageFile):
+    print("\n\n\n\n\n\npredict\n\n\n\n\n\n\n\n: ", imageFile)        
     # Load from a file
     image = Image.open(imageFile)
 
@@ -120,3 +121,6 @@ def predict(imageFile):
             exit(-1)
 
 
+""" 
+if __name__ == "__main__":
+    predict("example_1.JPG") """
