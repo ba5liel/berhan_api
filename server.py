@@ -52,25 +52,25 @@ def update_orientation(image):
                 image = image.transpose(Image.FLIP_LEFT_RIGHT)
     return image
 
-graph_def = tf.compat.v1.GraphDef()
-labels = []
 
-# These are set to the default names from exported models, update as needed.
-filename = "model.pb"
-labels_filename = "labels.txt"
-
-# Import the TF graph
-with tf.io.gfile.GFile(filename, 'rb') as f:
-    graph_def.ParseFromString(f.read())
-    tf.import_graph_def(graph_def, name='')
-
-# Create a list of labels.
-with open(labels_filename, 'rt') as lf:
-    for l in lf:
-        labels.append(l.strip())
 
 def predict(imageFile):
-    print("\n\n\n\n\n\npredict\n\n\n\n\n\n\n\n: ", imageFile)        
+    graph_def = tf.compat.v1.GraphDef()
+    labels = []
+
+    # These are set to the default names from exported models, update as needed.
+    filename = "model.pb"
+    labels_filename = "labels.txt"
+
+    # Import the TF graph
+    with tf.io.gfile.GFile(filename, 'rb') as f:
+        graph_def.ParseFromString(f.read())
+        tf.import_graph_def(graph_def, name='')
+
+    # Create a list of labels.
+    with open(labels_filename, 'rt') as lf:
+        for l in lf:
+            labels.append(l.strip())
     # Load from a file
     image = Image.open(imageFile)
 
@@ -167,9 +167,8 @@ def api_predict():
         filename = secure_filename(file.filename)
         savedfile = os.path.join(app.config['UPLOAD_FOLDER'], filename);
         file.save(savedfile)
-        predict("example_1.JPG")
 
-        return jsonify({"error": False, "data": 1})
+        return jsonify({"error": False, "data": predict(savedfile)})
 
     return jsonify({"error": True, "msg": "Unknow error"})
 
