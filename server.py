@@ -3,6 +3,8 @@ from predict import predict
 import os
 from flask import Flask, flash, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -50,6 +52,8 @@ def api_predict():
     return jsonify({"error": True, "msg": "Unknow error"})
 
 if __name__ == '__main__':
+    dotenv_path = os.path.join(os.path.dirname(__file__), '.env')  # Path to .env file
+    load_dotenv(dotenv_path)
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug=True)

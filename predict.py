@@ -121,6 +121,5 @@ def predict(imageFile):
             exit(-1)
 
 
-""" 
 if __name__ == "__main__":
-    predict("example_1.JPG") """
+    predict("two.jpg")
